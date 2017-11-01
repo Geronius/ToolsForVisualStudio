@@ -99,7 +99,7 @@ namespace DeploymentFrameworkForBizTalk.Addin.Implementation
             _mcs.AddCommand(menuItem);
             menuItem.BeforeQueryStatus += new EventHandler(_manager.OnBeforeQueryStatus);
 
-            //gert [AttachToProcessingHost]
+            //gert [DecodeBindings]
             menuCommandID = new CommandID(GuidList.guidAddinCmdSet, (int)PkgCmdIDList.cmdidExecuteDecodeBindings);
             menuItem = new OleMenuCommand(_manager.OnExecuteDecodeBindingsCommand, menuCommandID);
             _mcs.AddCommand(menuItem);

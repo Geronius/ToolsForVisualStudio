@@ -222,7 +222,7 @@
       </Button>
       <Button guid="guidAddinCmdSet" id="cmdidExecuteDecodeBindings" priority="0x0160" type="Button">
         <Parent guid="guidAddinCmdSet" id="BTDFMenuGroup4" />
-        <Icon guid="guidImages" id="bmpExecuteDecodeBindings" />
+        <Icon guid="guidImages" id="bmpDecodeBindings" />
         <CommandFlag>DefaultDisabled</CommandFlag>
         <Strings>
           <CommandName>Decode BizTalk Bindings</CommandName>
@@ -295,7 +295,6 @@
       <IDSymbol name="bmpDeployRules" value="13" />
       <IDSymbol name="bmpUndeployRules" value="14" />
       <IDSymbol name="bmpAttachToProcessingHost" value="15" />
-      <IDSymbol name="bmpExecuteDecodeBindings" value="16" />
     </GuidSymbol>
   </Symbols>
 
