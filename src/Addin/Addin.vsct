@@ -210,6 +210,26 @@
           <ToolTipText>Pre-processes bindings to create PortBindings.xml from MasterPortBindings.xml</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="guidAddinCmdSet" id="cmdidAttachToProcessingHost" priority="0x0150" type="Button">
+        <Parent guid="guidAddinCmdSet" id="BTDFMenuGroup4" />
+        <Icon guid="guidImages" id="bmpAttachToProcessingHost" />
+        <CommandFlag>DefaultDisabled</CommandFlag>
+        <Strings>
+          <CommandName>Attach To BiztalkHost</CommandName>
+          <ButtonText>Attach To BiztalkHost</ButtonText>
+          <ToolTipText>Attach To BiztalkHost</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="guidAddinCmdSet" id="cmdidExecuteDecodeBindings" priority="0x0160" type="Button">
+        <Parent guid="guidAddinCmdSet" id="BTDFMenuGroup4" />
+        <Icon guid="guidImages" id="bmpExecuteDecodeBindings" />
+        <CommandFlag>DefaultDisabled</CommandFlag>
+        <Strings>
+          <CommandName>Decode BizTalk Bindings</CommandName>
+          <ButtonText>Decode BizTalk Bindings</ButtonText>
+          <ToolTipText>Decodes embedded XML fragments inside the bindings XML file</ToolTipText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--
@@ -255,6 +275,8 @@
       <IDSymbol name="cmdidImportBindings" value="0x0120" />
       <IDSymbol name="cmdidPreprocessBindings" value="0x0122" />
       <IDSymbol name="cmdidUpdateSso" value="0x0124" />
+      <IDSymbol name="cmdidAttachToProcessingHost" value="0x0126" />
+      <IDSymbol name="cmdidExecuteDecodeBindings" value="0x0128" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{71c93be8-e482-46a1-a7a1-3b4edc9cde20}">
@@ -269,9 +291,11 @@
       <IDSymbol name="bmpExportSettings" value="9" />
       <IDSymbol name="bmpImportBindings" value="10" />
       <IDSymbol name="bmpPreprocessBindings" value="11" />
-      <!--<IDSymbol name="bmpDecodeBindings" value="12" />-->
+      <IDSymbol name="bmpDecodeBindings" value="12" />
       <IDSymbol name="bmpDeployRules" value="13" />
       <IDSymbol name="bmpUndeployRules" value="14" />
+      <IDSymbol name="bmpAttachToProcessingHost" value="15" />
+      <IDSymbol name="bmpExecuteDecodeBindings" value="16" />
     </GuidSymbol>
   </Symbols>
 
@@ -313,6 +337,12 @@
       <Parent guid="guidAddinCmdSet" id="ToolbarGroup4" />
     </CommandPlacement>
     <CommandPlacement guid="guidAddinCmdSet" id="cmdidPreprocessBindings" priority="0x0220">
+      <Parent guid="guidAddinCmdSet" id="ToolbarGroup4" />
+    </CommandPlacement>
+    <CommandPlacement guid="guidAddinCmdSet" id="cmdidAttachToProcessingHost" priority="0x0230">
+      <Parent guid="guidAddinCmdSet" id="ToolbarGroup4" />
+    </CommandPlacement>
+    <CommandPlacement guid="guidAddinCmdSet" id="cmdidExecuteDecodeBindings" priority="0x0240">
       <Parent guid="guidAddinCmdSet" id="ToolbarGroup4" />
     </CommandPlacement>
   </CommandPlacements>

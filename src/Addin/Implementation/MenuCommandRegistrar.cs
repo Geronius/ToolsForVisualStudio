@@ -92,6 +92,18 @@ namespace DeploymentFrameworkForBizTalk.Addin.Implementation
             menuItem = new OleMenuCommand(_manager.OnUpdateSsoCommand, menuCommandID);
             _mcs.AddCommand(menuItem);
             menuItem.BeforeQueryStatus += new EventHandler(_manager.OnBeforeQueryStatus);
+
+            //gert [AttachToProcessingHost]
+            menuCommandID = new CommandID(GuidList.guidAddinCmdSet, (int)PkgCmdIDList.cmdidAttachToProcessingHost);
+            menuItem = new OleMenuCommand(_manager.OnAttachToProcessingHostCommand, menuCommandID);
+            _mcs.AddCommand(menuItem);
+            menuItem.BeforeQueryStatus += new EventHandler(_manager.OnBeforeQueryStatus);
+
+            //gert [AttachToProcessingHost]
+            menuCommandID = new CommandID(GuidList.guidAddinCmdSet, (int)PkgCmdIDList.cmdidExecuteDecodeBindings);
+            menuItem = new OleMenuCommand(_manager.OnExecuteDecodeBindingsCommand, menuCommandID);
+            _mcs.AddCommand(menuItem);
+            menuItem.BeforeQueryStatus += new EventHandler(_manager.OnBeforeQueryStatus);
         }
     }
 }

@@ -14,19 +14,19 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [Category("1. What to Deploy")]
         [Description("Deploy assemblies containing schemas?")]
         [DisplayName("Deploy schemas?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IncludeSchemas { get; set; }
 
         [Category("1. What to Deploy")]
         [Description("Deploy assemblies containing orchestrations?")]
         [DisplayName("Deploy orchestrations?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IncludeOrchestrations { get; set; }
 
         [Category("1. What to Deploy")]
         [Description("Deploy assemblies containing maps/transforms?")]
         [DisplayName("Deploy transforms/maps?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IncludeTransforms { get; set; }
 
         [Category("1. What to Deploy")]
@@ -52,12 +52,18 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [DisplayName("Deploy custom functoids?")]
         [DefaultValue(false)]
         public bool IncludeCustomFunctoids { get; set; }
-
+        
         [Category("1. What to Deploy")]
-        [Description("Deploy BRE vocabularies and/or rule policies?")]
-        [DisplayName("Deploy BRE vocabs and/or policies?")]
+        [Description("Deploy BRE vocabularies?")]
+        [DisplayName("Deploy BRE vocabs?")]
         [DefaultValue(false)]
-        public bool IncludeVocabAndRules { get; set; }
+        public bool IncludeBREVocabularies { get; set; }
+        
+        [Category("1. What to Deploy")]
+        [Description("Deploy BRE rule policies?")]
+        [DisplayName("Deploy BRE policies?")]
+        [DefaultValue(false)]
+        public bool IncludeBREPolicies { get; set; }
 
         [Category("1. What to Deploy")]
         [Description("Deploy IIS virtual directories?")]
@@ -68,7 +74,7 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [Category("1. What to Deploy")]
         [Description("Deploy BizTalk bindings from PortBindings.xml or PortBindingsMaster.xml file?")]
         [DisplayName("Deploy BizTalk bindings?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IncludeMessagingBindings { get; set; }
 
         [Category("1. What to Deploy")]
@@ -101,6 +107,13 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [DefaultValue(false)]
         public bool IncludeBam { get; set; }
 
+
+        [Category("2. How to Deploy")]
+        [Description("Auto recreate VirtualDirectory?")]
+        [DisplayName("Auto recreate VirtualDirectory?")]
+        [DefaultValue(false)]
+        public bool ReCreateWcfServices { get; set; }
+
         [Category("2. How to Deploy")]
         [Description("Run InstallUtil.exe on all .NET component assemblies listed in Components?")]
         [DisplayName("Run InstallUtil on all .NET component assemblies?")]
@@ -108,30 +121,34 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         public bool IncludeInstallUtilForComponents { get; set; }
 
         [Category("2. How to Deploy")]
-        [Description("Use a master/template bindings XML file (PortBindingsMaster.xml). Transformed at deploy time to PortBindings.xml incl. replacement of any template values from the settings spreadsheet.")]
-        [DisplayName("Use a master bindings XML file")]
+        [Description("Use a master/template bindings XML file (PortBindingsMaster.xml)? It is transformed at deploy time to PortBindings.xml by optional re-encoding of nested XML fragments and optional replacement of template values from the settings spreadsheet.")]
+        [DisplayName("Use a master bindings XML file?")]
         [DefaultValue(false)]
-        [ReadOnly(true)]
         public bool UsingMasterBindings { get; set; }
 
         [Category("2. How to Deploy")]
         [Description("Require XML files to contain #ifdef preprocessor directives when performing macro replacements from the settings spreadsheet? Otherwise, macros (like ${SettingName}) are replaced globally.")]
         [DisplayName("Require #ifdef for XML macro replacement?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool RequireXmlPreprocessDirectives { get; set; }
 
         [Category("2. How to Deploy")]
-        [Description("Use un-encoded (&gt; to > etc.) XML in adapter bindings in PortBindingsMaster.xml. ElementTunnel.exe will re-encode the XML before passing it to BizTalk.")]
-        [DisplayName("Use un-encoded XML in adapter bindings")]
+        [Description("Use un-encoded (&gt; to > etc.) XML in adapter bindings in PortBindings.xml or PortBindingsMaster.xml? ElementTunnel.exe will be executed to re-encode the XML before passing it to BizTalk.")]
+        [DisplayName("Use un-encoded XML in adapter bindings?")]
         [DefaultValue(false)]
-        [ReadOnly(true)]
         public bool ApplyXmlEscape { get; set; }
 
         [Category("2. How to Deploy")]
         [Description("Include SettingsFileGenerator.xml Excel spreadsheet in the server install MSI? The spreadsheet may contain sensitive information like passwords and connection strings. It may be preferred to keep it in a secure location.")]
         [DisplayName("Include SettingsFileGenerator.xml in the MSI?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool IncludeSettingsSpreadsheetInMsi { get; set; }
+
+        [Category("2. How to Deploy")]
+        [Description("Add .NET component assemblies and IIS vdirs as resources in the BizTalk app? May be desirable if you ever export an MSI from the BizTalk Admin Console.")]
+        [DisplayName("Add components/vdirs as resources in BizTalk app?")]
+        [DefaultValue(false)]
+        public bool IncludeCompsAndVDirsAsResources { get; set; }
 
         [Category("2. How to Deploy")]
         [Description("Skip IIS reset or AppPool reset during deployment? Reset is not necessary if not using IIS-related ports that could lock files in the application.")]
@@ -148,19 +165,19 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [Category("2. How to Deploy")]
         [Description("Start the BizTalk app after deployment or leave it in un-started state?")]
         [DisplayName("Start BizTalk app after deployment?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool StartApplicationOnDeploy { get; set; }
 
         [Category("2. How to Deploy")]
         [Description("Enable all receive locations in the BizTalk app after deployment or leave them as-is? Does not apply if StartApplicationOnDeploy = false.")]
         [DisplayName("Enable all receive locations after deploy?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool EnableAllReceiveLocationsOnDeploy { get; set; }
 
         [Category("2. How to Deploy")]
         [Description("Start all other BizTalk apps referenced by this app during deployment or leave them as-is? Does not apply if StartApplicationOnDeploy = false.")]
         [DisplayName("Start referenced apps during deploy?")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool StartReferencedApplicationsOnDeploy { get; set; }
 
         [Category("3. Advanced Deployment Options")]
@@ -192,6 +209,19 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
         [DisplayName("Enable BizTalk's schema validation debug option?")]
         [DefaultValue(false)]
         public bool EnableBizTalkSchemaValidation { get; set; }
+        
+        [Category("4. DeploymentWizard Options")]
+        [Description("Create WCFWebsite folder?")]
+        [DisplayName("Create WCFWebsite folder?")]
+        [DefaultValue(false)]
+        public bool CreateWCFWebsiteFolder { get; set; }
+
+        [Category("4. DeploymentWizard Options")]
+        [Description("Create SoapWebsite folder?")]
+        [DisplayName("Create SoapWebsite folder?")]
+        [DefaultValue(false)]
+        public bool CreateSoapWebsiteFolder { get; set; }
+
 
         public DeploymentOptions()
         {
@@ -199,13 +229,17 @@ namespace DeploymentFramework.VisualStudioAddIn.ProjectWizard
             this.IncludeOrchestrations = true;
             this.IncludeTransforms = true;
             this.IncludeMessagingBindings = true;
-            this.IncludeSSO = true;
+            //this.IncludeSSO = true;
             this.IncludeSettingsSpreadsheetInMsi = true;
-            this.StartApplicationOnDeploy = true;
-            this.EnableAllReceiveLocationsOnDeploy = true;
-            this.StartReferencedApplicationsOnDeploy = true;
+            //this.StartApplicationOnDeploy = true;
+            //this.EnableAllReceiveLocationsOnDeploy = true;
+            //this.StartReferencedApplicationsOnDeploy = true;
+            this.CreateSoapWebsiteFolder = false;
+            this.CreateWCFWebsiteFolder = false;
             this.UsingMasterBindings = true;
             this.RequireXmlPreprocessDirectives = false;
+            this.SkipHostInstancesRestart = true;
+            this.SkipIISReset = true;
             this.ApplyXmlEscape = true;
         }
     }

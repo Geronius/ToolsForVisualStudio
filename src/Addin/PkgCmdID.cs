@@ -23,5 +23,7 @@ namespace DeploymentFrameworkForBizTalk.Addin
         public const uint cmdidImportBindings = 0x0120;
         public const uint cmdidPreprocessBindings = 0x0122;
         public const uint cmdidUpdateSso = 0x0124;
+        public const uint cmdidAttachToProcessingHost = 0x0126;
+        public const uint cmdidExecuteDecodeBindings = 0x0128;
     };
 }

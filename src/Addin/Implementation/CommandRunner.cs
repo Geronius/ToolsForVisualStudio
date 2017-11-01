@@ -5,11 +5,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell.Interop;
+using System.Management;
+using System.Runtime.InteropServices;
+using Process = EnvDTE.Process;
+
 
 namespace DeploymentFrameworkForBizTalk.Addin.Implementation
 {
@@ -153,6 +158,74 @@ namespace DeploymentFrameworkForBizTalk.Addin.Implementation
                     return;
                 }
             }
+        }
+
+        public void Attach(ManagementObject biztalkHostObject, bool bounceHost)
+        //{
+        //                var bizTalkHostName = managementObject.Properties["HostName"].Value.ToString();
+
+        //    Attach(processName, bizTalkHostName, bounceHost);
+        //}
+        //public void Attach(string processName, string bizTalkHostName, bool bounceHost = false)
+        {
+            // Try loop - Visual Studio may not respond the first time.
+            var tryCount = 5;
+            while (tryCount-- > 0)
+            {
+                try
+                {
+                    if (bounceHost)
+                    {
+                        //owP.OutputString(Environment.NewLine);
+
+                        var i = biztalkHostObject; //GetBiztalkHosts().SingleOrDefault(h => h.Key == bizTalkHostName).Value;
+
+                        if (i != null)
+                        {
+                            WriteToOutputWindow("Stopping: " + i.Properties["HostName"].Value);
+                            i.InvokeMethod("Stop", null);
+
+                            WriteToOutputWindow("Starting: " + i.Properties["HostName"].Value);
+                            i.InvokeMethod("Start", null);
+                        }
+                    }
+
+
+                    var processName = biztalkHostObject.Properties["HostName"].Value.ToString();
+                    var perfCounter = new System.Diagnostics.PerformanceCounter("BizTalk:Messaging", "ID Process", processName);
+                    var processID = perfCounter.NextValue();
+
+                    var processes = _applicationObject.Debugger.LocalProcesses;
+                    foreach (var proc in from Process proc in processes /*where proc.Name.IndexOf(processName, StringComparison.OrdinalIgnoreCase) != -1*/ where proc.ProcessID == processID let serviceName = GetServiceName(proc.ProcessID) /*where String.Equals(serviceName, string.Format("btssvc${0}", bizTalkHostName), StringComparison.OrdinalIgnoreCase)*/ select proc)
+                    {
+                        proc.Attach();
+                        
+                        WriteToOutputWindow(Environment.NewLine);
+                        WriteToOutputWindow(String.Format("Attached to process {0} - {1} successfully.", processName, proc.ProcessID));
+                        WriteToOutputWindow(Environment.NewLine);
+                        WriteToOutputWindow(Environment.NewLine);
+
+                        break;
+                    }
+                    break;
+                }
+                catch (COMException)
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+        }
+
+
+        public static String GetServiceName(int processId)
+        {
+            var query = "SELECT * FROM Win32_Service where ProcessId = " + processId;
+            var searcher = new ManagementObjectSearcher(query);
+
+            var retVal = (from ManagementObject queryObj in searcher.Get() select queryObj["Name"].ToString()).FirstOrDefault();
+
+            return retVal;
+
         }
     }
 }

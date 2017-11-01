@@ -10,6 +10,8 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
+using System.Windows.Forms;
+using System.Management;
 
 namespace DeploymentFrameworkForBizTalk.Addin.Implementation
 {
@@ -84,9 +86,32 @@ namespace DeploymentFrameworkForBizTalk.Addin.Implementation
             ExecuteMSBuildTarget("PreprocessBindings");
         }
 
+        internal void OnExecuteDecodeBindingsCommand(object sender, EventArgs e)
+        {
+            ExecuteMSBuildTarget("DecodeBindings");
+        }
+
         internal void OnUpdateSsoCommand(object sender, EventArgs e)
         {
             ExecuteMSBuildTarget("DeploySSO");
+        }
+
+        //gert [AttachToProcessingHost]
+        internal void OnAttachToProcessingHostCommand(object sender, EventArgs e)
+        {
+            var form = new BiztalkHostsForm();
+            var result = form.ShowDialog();
+
+
+
+            //string projectPath = Util.GetDeploymentProjectPath(GetActiveSolutionFileName());
+            if (result == DialogResult.OK)
+                _commandRunner.Attach(form.CheckedHost, form.BounceHost);
+
+            // Attach("BTSNTSvc64.exe", "ProcessingHost", true);
+
+            //string arguments = string.Format("\"{0}\" /nologo /t:Deploy /clp:DisableMPLogging /p:Configuration={1}", projectPath, GetActiveSolutionConfiguration());
+            //_commandRunner.ExecuteBuild(_msbuildPath, arguments);
         }
 
         internal void OnDeployRulesCommand(object sender, EventArgs e)
@@ -196,5 +221,7 @@ namespace DeploymentFrameworkForBizTalk.Addin.Implementation
         {
             _commandRunner.OnCloseSolution();
         }
+
+        
     }
 }

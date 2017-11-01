@@ -97,9 +97,8 @@
             // 
             this.writeOnlyWhenNonDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.writeOnlyWhenNonDefault.AutoSize = true;
-            this.writeOnlyWhenNonDefault.Checked = true;
-            this.writeOnlyWhenNonDefault.CheckState = System.Windows.Forms.CheckState.Checked;
             this.writeOnlyWhenNonDefault.Cursor = System.Windows.Forms.Cursors.Default;
+            this.writeOnlyWhenNonDefault.Enabled = false;
             this.writeOnlyWhenNonDefault.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.writeOnlyWhenNonDefault.Location = new System.Drawing.Point(12, 487);
             this.writeOnlyWhenNonDefault.Name = "writeOnlyWhenNonDefault";
@@ -130,7 +129,7 @@
             this.AcceptButton = this.createButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(555, 553);
+            this.ClientSize = new System.Drawing.Size(555, 561);
             this.ControlBox = false;
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.writeOnlyWhenNonDefault);
