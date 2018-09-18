@@ -2,7 +2,6 @@
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
   <Identifier Id="DeploymentFrameworkForBizTalk.ToolsForVS2010">
     <Name>Deployment Framework for BizTalk Tools for VS 2010</Name>
-    <Version>1.0.0.0</Version>
     <Author>Deployment Framework for BizTalk Team</Author>
     <Version>2.0.1.0</Version>
     <Description xml:space="preserve">Visual Studio Tools for the Deployment Framework for BizTalk - a powerful framework that eliminates the pain associated with BizTalk application deployments, and goes far beyond BizTalk’s out-of-the-box deployment functionality.</Description>
